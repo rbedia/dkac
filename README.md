@@ -4,10 +4,10 @@ DKAC - Gnutella Web Cache
 DKAC is a bare bones implementation of the GWC2 standard documented at
 http://gnucleus.sourceforge.net/gwebcache/newgwc.html
 
-Running dkac on Red Hat's OpenShift PaaS
+Running DKAC on Red Hat's OpenShift PaaS
 ===========================================
 
-You can quickly get a public instance of DKAC running with a free Openshift account.
+You can quickly get a public instance of DKAC running with a free OpenShift account.
 
 Create an account at http://openshift.redhat.com/
 
