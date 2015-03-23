@@ -88,7 +88,15 @@ if ($request['get'] || $request['update'] || $request['ping']) {
 } else {
 	// redirect to human page
 ?>
-This is <?php echo VERSION; ?>. <a href="?source">Source</a>
+<h1><?php echo VERSION; ?></h1>
+
+Gnutella Web Cache
+
+<ul>
+	<li><a href="?source">Source</a></li>
+	<li><a href="https://github.com/rbedia/dkac">Github</a></li>
+	<li><a href="newgwc.html">GWC2 Specification</a></li>
+</ul>
 <?php
 }
 
