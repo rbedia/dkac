@@ -71,14 +71,14 @@ if ($request['get'] || $request['update'] || $request['ping']) {
 	}
 	if ($request['update']) {
 		$iplist = new IPList();
-		if (!$iplist->isTooEarly($_SERVER['REMOTE_ADDR'])) {
+		if (!$iplist->isTooEarly($_SERVER['HTTP_X_CLIENT_IP'])) {
 			$ret = doUpdate($request['url'], $request['ip']);
 			$response = array_merge($response, $ret);
 		} else {
 			$response = array(createLine('i', 'update', 'WARNING', 
 				'Returned too soon'));
 		}
-		$iplist->addIP($_SERVER['REMOTE_ADDR']);
+		$iplist->addIP($_SERVER['HTTP_X_CLIENT_IP']);
 		$iplist->storeIPs();
 	}
 	sendResponse($response);
@@ -312,7 +312,7 @@ function validateIP($host) {
 	if (filter_var($ip, FILTER_VALIDATE_IP, 
 		FILTER_FLAG_IPV4|FILTER_FLAG_NO_PRIV_RANGE|FILTER_FLAG_NO_RES_RANGE) === false) 
 		return 'Invalid IP';
-	if ($ip != $_SERVER['REMOTE_ADDR']) return "Query IP doesn't match client IP";
+	if ($ip != $_SERVER['HTTP_X_CLIENT_IP']) return "Query IP doesn't match client IP";
 	if (preg_match("/[^0-9]/", $port)) {
 		return 'Invalid port';
 	}
