@@ -93,9 +93,9 @@ if ($request['get'] || $request['update'] || $request['ping']) {
 Gnutella Web Cache
 
 <ul>
-	<li><a href="?source">Source</a></li>
-	<li><a href="https://github.com/rbedia/dkac">Github</a></li>
+	<li><a href="https://github.com/rbedia/dkac">DKAC Github project</a></li>
 	<li><a href="newgwc.html">GWC2 Specification</a></li>
+	<li><a href="?source">Live source code</a></li>
 </ul>
 <?php
 }
