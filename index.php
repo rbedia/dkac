@@ -1,6 +1,6 @@
 <?php
 /*
-Copyright (c) 201!, Rafael Bedia <dcat|at|trillinux.org>
+Copyright (c) 2015, Rafael Bedia <dcat|at|trillinux.org>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@ ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-define('VERSION', 'DKAC/Enticing-Enumon');
+define('VERSION', 'DKAC/Fiddling-Fumbleochu');
 define('DATA_DIR', getenv('OPENSHIFT_DATA_DIR'));
 define('UPDATE_WAIT', 55 * 60); // 55 minutes between updates
 define('URL_STORE_COUNT', 20);
