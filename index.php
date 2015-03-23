@@ -27,11 +27,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 define('VERSION', 'DKAC/Fiddling-Fumbleochu');
-define('DATA_DIR', getenv('OPENSHIFT_DATA_DIR'));
+define('DATA_DIR', getDataDir());
 define('UPDATE_WAIT', 55 * 60); // 55 minutes between updates
 define('URL_STORE_COUNT', 20);
 define('HOST_STORE_COUNT', 200);
 define('HOST_EXPIRATION', 45 * 60); // 45 minutes
+define('REVERSE_PROXY', isReverseProxy());
 
 $request = array();
 $response = array();
@@ -71,14 +72,14 @@ if ($request['get'] || $request['update'] || $request['ping']) {
 	}
 	if ($request['update']) {
 		$iplist = new IPList();
-		if (!$iplist->isTooEarly($_SERVER['HTTP_X_CLIENT_IP'])) {
+		if (!$iplist->isTooEarly(getClientIP())) {
 			$ret = doUpdate($request['url'], $request['ip']);
 			$response = array_merge($response, $ret);
 		} else {
 			$response = array(createLine('i', 'update', 'WARNING', 
 				'Returned too soon'));
 		}
-		$iplist->addIP($_SERVER['HTTP_X_CLIENT_IP']);
+		$iplist->addIP(getClientIP());
 		$iplist->storeIPs();
 	}
 	sendResponse($response);
@@ -320,7 +321,7 @@ function validateIP($host) {
 	if (filter_var($ip, FILTER_VALIDATE_IP, 
 		FILTER_FLAG_IPV4|FILTER_FLAG_NO_PRIV_RANGE|FILTER_FLAG_NO_RES_RANGE) === false) 
 		return 'Invalid IP';
-	if ($ip != $_SERVER['HTTP_X_CLIENT_IP']) return "Query IP doesn't match client IP";
+	if ($ip != getClientIP()) return "Query IP doesn't match client IP";
 	if (preg_match("/[^0-9]/", $port)) {
 		return 'Invalid port';
 	}
@@ -371,6 +372,33 @@ function getParam($name) {
 	} else {
 		$request[$name] = '';
 	}
+}
+
+function isReverseProxy() {
+	$openshift_home = getenv('OPENSHIFT_HOMEDIR');
+	return !empty($openshift_home);
+}
+
+function getDataDir() {
+	// Check for openshift environment.
+	$openshift = getenv('OPENSHIFT_DATA_DIR');
+	if (isset($openshift) && !empty($openshift)) {
+		return $openshift;
+	} else {
+		// Default to data subdirectory. 
+		return 'data';
+	}
+}
+
+function getClientIP() {
+	if (REVERSE_PROXY && !empty($_SERVER['HTTP_X_CLIENT_IP'])) {
+		    $ip = $_SERVER['HTTP_X_CLIENT_IP'];
+	} elseif (REVERSE_PROXY && !empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		    $ip = $_SERVER['REMOTE_ADDR'];
+	}
+	return $ip;
 }
 
 ?>
