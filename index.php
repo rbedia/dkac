@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 define('VERSION', 'DKAC/Enticing-Enumon');
-define('DATA_DIR', 'data');
+define('DATA_DIR', getenv('OPENSHIFT_DATA_DIR'));
 define('UPDATE_WAIT', 55 * 60); // 55 minutes between updates
 define('URL_STORE_COUNT', 20);
 define('HOST_STORE_COUNT', 200);
