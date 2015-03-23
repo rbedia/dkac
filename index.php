@@ -27,7 +27,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
 define('VERSION', 'DKAC/Fiddling-Fumbleochu');
-define('DATA_DIR', getDataDir());
+define('DATA_DIR', getDataDir()); // Directory must be writable
 define('UPDATE_WAIT', 55 * 60); // 55 minutes between updates
 define('URL_STORE_COUNT', 20);
 define('HOST_STORE_COUNT', 200);
