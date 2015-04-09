@@ -39,6 +39,11 @@ $response = array();
 
 $networks = array('gnutella2');
 
+# Create the data directory if it doesn't exist.
+if (!file_exists(DATA_DIR)) {
+	mkdir(DATA_DIR, 0750, true);
+}
+
 getParamIsSet('get');
 getParamIsSet('update');
 getParamIsSet('ping');
